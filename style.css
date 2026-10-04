@@ -1,0 +1,150 @@
+/* ------------------------------------------------------------------
+   Colors & type
+   ------------------------------------------------------------------ */
+:root {
+  --bg: #FAF9F6;
+  --ink: #222222;
+
+  /* pastel palette — taken from the sculpture */
+  --yellow: #E9DB74;
+  --pink:   #E99595;
+  --blue:   #A9C6D9;
+  --green:  #B8D3A7;
+  --lilac:  #C8B7D9;
+  --red:    #D86F73;
+
+  /* the Reel's CapCut "System" font: neutral Apple / Helvetica-like sans */
+  --system: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --serif: "EB Garamond", "Iowan Old Style", Garamond, "Times New Roman", serif;
+  --measure: 37rem;
+  --scroll-length: 330vh;   /* total page height — shorter = faster */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--system);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: var(--ink); color: var(--bg); }
+
+/* ------------------------------------------------------------------
+   Pinned stage: the text block stays on screen while scroll drives it
+   ------------------------------------------------------------------ */
+.js .scroller { height: var(--scroll-length); position: relative; }
+.js .stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.statement {
+  position: relative;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 6vh 18px 4vh;
+  font-size: clamp(12.5px, 3.35vw, 16px);
+  line-height: 1.42;
+  text-align: justify;
+  text-align-last: left;
+  will-change: transform;
+}
+.statement .label {
+  margin: 0 0 1.5em;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .14em;
+  line-height: 1;
+  text-align: left;
+}
+.statement p { margin: 0; text-indent: 1.7em; }
+.statement .label + p { text-indent: 0; }
+.statement.gone { visibility: hidden; }
+
+@media (min-width: 720px) {
+  .statement { padding-top: 9vh; line-height: 1.45; }
+  .statement .label { font-size: 11px; }
+}
+
+/* words / letters created by script.js */
+.w { display: inline-block; text-indent: 0; transition: color 0.9s ease; }
+.w.hide { visibility: hidden; }
+.l { display: inline-block; }
+.c-on { color: var(--cc); }
+/* words about to launch start to glow (only a handful at a time) */
+.w.glow {
+  color: rgb(var(--gc));
+  text-shadow: 0 0 .1em rgba(255, 255, 255, .9), 0 0 .45em rgba(var(--gc), .75), 0 0 1.1em rgba(var(--gc), .45);
+}
+
+/* ------------------------------------------------------------------
+   Font contamination
+   ------------------------------------------------------------------ */
+.f-serif   { font-family: var(--serif); font-size: 1.14em; }
+.f-times   { font-family: "Times New Roman", Times, serif; font-size: 1.06em; }
+.f-arial   { font-family: Arial, "Liberation Sans", sans-serif; }
+.f-sans    { font-family: var(--system); }
+.f-mono    { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .9em; }
+.f-courier { font-family: "Courier New", Courier, monospace; font-size: 1.02em; }
+.f-pixel   { font-family: "Silkscreen", ui-monospace, monospace; font-size: .76em; }
+
+.s-italic { font-style: italic; }
+.s-bold   { font-weight: 700; }
+.s-thin   { font-weight: 200; }
+.s-spaced { letter-spacing: .28em; }
+.s-tight  { letter-spacing: -.09em; }
+.s-big    { font-size: 1.35em; line-height: 1; }
+.s-small  { font-size: .7em; }
+
+/* ------------------------------------------------------------------
+   The end
+   ------------------------------------------------------------------ */
+.final {
+  margin: 0;
+  padding: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.55;
+  color: #222222;
+  text-align: center;
+}
+/* sits above the fireworks; a soft halo of background colour keeps it readable */
+.final span { text-shadow: 0 0 4px var(--bg), 0 0 10px var(--bg), 0 0 18px var(--bg); }
+.js .final {
+  position: fixed;
+  z-index: 4;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+}
+.js .final.on { visibility: visible; }
+
+/* fireworks layer */
+.sky {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .w { transition: none; }
+}
